@@ -1,14 +1,20 @@
 /* 
-  Title : Client Side App File
-  Description : Contains all the User made Components for the App 
+  Title : App file
+  Description : Contains Routes,Components etc
   Author : Aritra Pal
-  Date : 13/12/2022 
+  Date : 14/12/2022 
 */
 
-function App() {
-  return (
-    <div>Hello World!</div>
-  );
-}
+//dependencies
+import { DatePicker,Modal } from 'antd';
+import Abc from './Abc.jsx'
 
+//App function
+function App() {
+  return <div>
+    <DatePicker/>
+    <br/>
+    <Abc/>
+  </div>
+}
 export default App;
