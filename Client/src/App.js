@@ -6,15 +6,27 @@
 */
 
 //dependencies
-import { DatePicker,Modal } from 'antd';
-import Abc from './Abc.jsx'
+import Navbar from "./Components/Navbar";
+import Navbar2 from "./Components/Navbar2";
+import { MainProvider } from "./Context/Main";
+import Signin from "./Components/Signin";
+import Signup from "./Components/Signup";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import MainDashboard from "./Components/MainDashboard";
 
 //App function
 function App() {
-  return <div>
-    <DatePicker/>
-    <br/>
-    <Abc/>
-  </div>
+  return (
+    <Router>
+      <MainProvider>
+        <Navbar2 />
+        <Routes>
+          <Route exact path="/signup" element={<Signup />}></Route>
+          <Route exact path="/signin" element={<Signin />}></Route>
+          <Route exact path="/" element={<MainDashboard/>}></Route>
+        </Routes>
+      </MainProvider>
+    </Router>
+  );
 }
 export default App;

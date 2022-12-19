@@ -18,6 +18,7 @@ const dbConnection = require("./helpers/dbConnection");
 
 //routes dependencies
 const signup = require("./handlers/routeHandlers/signup");
+const signin = require("./handlers/routeHandlers/signin");
 
 //create app object
 const app = express();
@@ -46,6 +47,7 @@ dbConnection;
 
 //sending request to specific route
 app.use("/signup", signup);
+app.use("/signin", signin);
 
 //custom 404 Error Handler
 app.use((req, res, next) => {
