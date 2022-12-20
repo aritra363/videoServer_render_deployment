@@ -7,23 +7,41 @@
 
 //dependencies
 import Navbar from "./Components/Navbar";
-import Navbar2 from "./Components/Navbar2";
 import { MainProvider } from "./Context/Main";
 import Signin from "./Components/Signin";
 import Signup from "./Components/Signup";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import MainDashboard from "./Components/MainDashboard";
+import UploadVideos from "./Components/UploadVideos";
+import LoginPrivateRoute from "./PrivateRoutes/loginPrivateRoute";
 
 //App function
 function App() {
   return (
     <Router>
       <MainProvider>
-        <Navbar2 />
+        <Navbar />
         <Routes>
-          <Route exact path="/signup" element={<Signup />}></Route>
-          <Route exact path="/signin" element={<Signin />}></Route>
-          <Route exact path="/" element={<MainDashboard/>}></Route>
+          <Route
+            exact
+            path="/signup"
+            element={
+              <LoginPrivateRoute>
+                <Signup />
+              </LoginPrivateRoute>
+            }
+          ></Route>
+          <Route
+            exact
+            path="/signin"
+            element={
+              <LoginPrivateRoute>
+                <Signin />
+              </LoginPrivateRoute>
+            }
+          ></Route>
+          <Route exact path="/" element={<MainDashboard />}></Route>
+          <Route exact path="/uploadvideos" element={<UploadVideos />}></Route>
         </Routes>
       </MainProvider>
     </Router>
