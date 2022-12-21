@@ -120,11 +120,11 @@ const Navbar = () => {
     });
     //set fontcolor
     setfcolor((prevcolor) => {
-      return prevcolor === "#212529" ? "#7F8A94" : "#212529";
+      return prevcolor === "#212529" ? "#EFFFFF" : "#212529";
     });
     //set button color
     setbtncolor((prevcolor) => {
-      return prevcolor === "#F0F0F0" ? "#001529" : "#F0F0F0";
+      return prevcolor === "#FFFFFF" ? "#1677FF" : "#FFFFFF";
     });
   };
   //setting on mount/reload navigate to home

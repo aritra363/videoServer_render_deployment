@@ -24,7 +24,7 @@ export const MainProvider = ({ children }) => {
   //State for fontcolor
   const [fcolor, setfcolor] = useState("#212529");
   //State for buttoncolor
-  const [btncolor, setbtncolor] = useState("#F0F0F0");
+  const [btncolor, setbtncolor] = useState("#FFFFFF");
   //return
   return (
     <MainContext.Provider
