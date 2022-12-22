@@ -25,6 +25,10 @@ export const MainProvider = ({ children }) => {
   const [fcolor, setfcolor] = useState("#212529");
   //State for buttoncolor
   const [btncolor, setbtncolor] = useState("#FFFFFF");
+  //state for toastcolor
+  const [toastcolor, settoastcolor] = useState("light");
+  //state for user details
+  const [user, setuser] = useState({});
   //return
   return (
     <MainContext.Provider
@@ -41,6 +45,10 @@ export const MainProvider = ({ children }) => {
         setfcolor,
         btncolor,
         setbtncolor,
+        toastcolor,
+        settoastcolor,
+        user,
+        setuser,
       }}
     >
       {children}

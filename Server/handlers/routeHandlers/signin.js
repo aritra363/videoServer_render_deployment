@@ -39,7 +39,8 @@ router.post(
         if (userIsPasswordValid) {
           //create userobj to output user
           const userObj = {
-            Name: userIsExsist[0].firstName + " " + userIsExsist[0].lastName,
+            FirstName: userIsExsist[0].firstName,
+            LastName: userIsExsist[0].lastName,
             Email: userIsExsist[0].email,
           };
           res

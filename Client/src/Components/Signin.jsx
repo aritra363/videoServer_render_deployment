@@ -8,37 +8,86 @@
 import { useContext } from "react";
 import MainContext from "../Context/Main";
 import { useNavigate } from "react-router";
-import { Button, Checkbox, Form, Input, Col, Row, Divider } from "antd";
+import { Button, Form, Input, Col, Row, Divider } from "antd";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 //main function
 const Signin = () => {
+  const [login] = Form.useForm();
   //getting fontcolor
-  const { fcolor, btncolor } = useContext(MainContext);
+  const { fcolor, btncolor, toastcolor, setuser } = useContext(MainContext);
   const navigate = useNavigate();
   const { setCurrent, setisloggedin } = useContext(MainContext);
-  //loginFunction
-  const loginHandler = () => {
-    setCurrent("Home");
-    setisloggedin("true");
-    localStorage.setItem("token", "aritrapalisagoodboy");
-    navigate("/");
-  };
-  const onFinish = (values) => {
-    console.log("Success:", values);
+
+  const onFinish = async (values) => {
+    //send request to server
+    const userData = JSON.stringify(values);
+    try {
+      const response = await fetch("http://127.0.0.1:4000/signin", {
+        body: userData,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      });
+      const result = await response.json();
+      //check if authorized or not
+      if (response.status === 200) {
+        //clear form fields
+        login.resetFields();
+        //give Success reply
+        toast.success(result.message);
+        //create user object
+        const userObj = {
+          FirstName: result.result.FirstName,
+          LastName: result.result.LastName,
+          Email: result.result.Email,
+        };
+        //set user state
+        setuser(userObj);
+        //loginFunction
+        setCurrent("Home");
+        setisloggedin("true");
+        //localStorage.setItem("token", "aritrapalisagoodboy");
+        navigate("/");
+      } else {
+        //send an error toast message
+        toast.error(result.message);
+      }
+    } catch (err) {
+      //send an error toast message
+      toast.error(err.message);
+    }
   };
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+    //send a toast message
+    toast.error("Email and password cannot be blank");
   };
   //return jsx
   return (
     <>
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme={toastcolor}
+      />
       <Divider orientation="middle" style={{ color: fcolor }}>
-        Login
+        <h4>Login</h4>
       </Divider>
       <Row justify="space-around" align="middle">
-        <Col span={10}>
+        <Col span={8}>
           <Form
-            name="basic"
+            form={login}
+            name="login"
             labelCol={{
               span: 8,
             }}
@@ -50,7 +99,7 @@ const Signin = () => {
             }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
-            autoComplete="off"
+            autoComplete="on"
             size="large"
             style={{ color: fcolor }}
           >

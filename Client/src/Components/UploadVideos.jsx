@@ -5,15 +5,121 @@
   Date :20/12/2022 
 */
 //dependencies
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import MainContext from "../Context/Main";
+import { UploadOutlined } from "@ant-design/icons";
+import { Button, message, Upload, Row, Divider, Col, Form, Input } from "antd";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 //main function
 const UploadVideos = () => {
+  const [upload] = Form.useForm();
   //getting fontcolor
-  const {fcolor} = useContext(MainContext)
+  const { fcolor, btncolor, toastcolor } = useContext(MainContext);
+
+  const props = {
+    beforeUpload: (file) => {
+      const ismp4 = file.type === "video/mp4";
+      const size = file.size <= 1000000000;
+      if (!ismp4 && !size) {
+        message.error(`Video must be .mp4 type and less that 1GB`);
+      }
+      return (ismp4 && size) || Upload.LIST_IGNORE;
+    },
+    onChange: (info) => {
+      return info;
+    },
+    multiple: false,
+    maxCount: 1,
+  };
+
+  const onFinish = (values) => {
+    //send a toast message
+    toast.success("yeah");
+    console.log(values);
+  };
+  const onFinishFailed = (errorInfo) => {
+    //send a toast message
+    toast.error("Error");
+  };
   //return jsx
-  return <div style={{color:fcolor}}>UploadVideos</div>;
+  return (
+    <>
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme={toastcolor}
+      />
+      <Divider orientation="middle" style={{ color: fcolor }}>
+        <h4>Upload Video</h4>
+      </Divider>
+      <Row justify="center" align="middle">
+        <Col span={8}>
+          <Form
+            form={upload}
+            name="upload"
+            labelCol={{
+              span: 8,
+            }}
+            wrapperCol={{
+              span: 16,
+            }}
+            initialValues={{
+              remember: true,
+            }}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="on"
+            size="large"
+            style={{ color: fcolor }}
+          >
+            <Form.Item
+              label={<span style={{ color: fcolor }}>Title</span>}
+              name="title"
+              rules={[
+                {
+                  required: true,
+                  message: "Please Enter the Title",
+                },
+              ]}
+            >
+              <Input style={{ color: "#177ddc" }} />
+            </Form.Item>
+            <Form.Item
+              label="Upload"
+              valuePropName="props"
+              getValueFromEvent={props.onChange}
+            >
+              <Upload {...props}>
+                <Button icon={<UploadOutlined />}>Upload Video</Button>
+              </Upload>
+            </Form.Item>
+            <Form.Item
+              wrapperCol={{
+                offset: 8,
+                span: 16,
+              }}
+            >
+              <Button
+                htmlType="submit"
+                style={{ color: fcolor, backgroundColor: btncolor }}
+              >
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
+        </Col>
+      </Row>
+    </>
+  );
 };
 
 //exporting the component

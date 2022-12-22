@@ -15,11 +15,31 @@ import { Menu, Switch, Col, Row } from "antd";
 import { useContext, useEffect } from "react";
 import MainContext from "../Context/Main";
 import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 //main function
 const Navbar = () => {
-  //get user name
-  const user = "Aritra";
+  const navigate = useNavigate();
+  const {
+    current,
+    setCurrent,
+    theme,
+    settheme,
+    isloggedin,
+    setisloggedin,
+    setbgcolor,
+    bgcolor,
+    fcolor,
+    setfcolor,
+    btncolor,
+    setbtncolor,
+    settoastcolor,
+    user,
+    setuser,
+    toastcolor,
+  } = useContext(MainContext);
+
   //Array of Options
   // Options to show to loggedout users
   const normal_items = [
@@ -71,27 +91,14 @@ const Navbar = () => {
     },
     {
       label: (
-        <a style={{ textDecoration: "none" }}>{`Hey ${user},wanna Logout!`}</a>
+        <a
+          style={{ textDecoration: "none" }}
+        >{`Hey ${user.FirstName},wanna Logout!`}</a>
       ),
       key: "logout",
       icon: <PoweroffOutlined />,
     },
   ];
-  const navigate = useNavigate();
-  const {
-    current,
-    setCurrent,
-    theme,
-    settheme,
-    isloggedin,
-    setisloggedin,
-    setbgcolor,
-    bgcolor,
-    fcolor,
-    setfcolor,
-    btncolor,
-    setbtncolor,
-  } = useContext(MainContext);
   //setting the background
   document.body.style.backgroundColor = bgcolor;
   //decide which options to render
@@ -105,7 +112,9 @@ const Navbar = () => {
       navigate("/");
       setCurrent("home");
       setisloggedin(false);
-      localStorage.removeItem("token");
+      //localStorage.removeItem("token");
+      setuser({});
+      toast.success("LoggedOut Succesfully!");
     }
   };
   //Toggling Dark and light mode
@@ -126,6 +135,10 @@ const Navbar = () => {
     setbtncolor((prevcolor) => {
       return prevcolor === "#FFFFFF" ? "#1677FF" : "#FFFFFF";
     });
+    //set Toast color
+    settoastcolor((prevcolor) => {
+      return prevcolor === "light" ? "dark" : "light";
+    });
   };
   //setting on mount/reload navigate to home
   useEffect(() => {
@@ -137,6 +150,18 @@ const Navbar = () => {
   }, []);
   return (
     <>
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme={toastcolor}
+      />
       <Row justify="end">
         <Col>
           <Switch
