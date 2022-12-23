@@ -1,6 +1,6 @@
-# Excluding node_modules nad Videos Folder
+# Excluding node_modules and Videos Folder
 node_modules/
-Videos/
+Server/public/videos/
 
 # Excluding .env file
 .env

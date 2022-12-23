@@ -81,6 +81,7 @@ const Signup = () => {
             FirstName: values.firstName,
             LastName: values.lastName,
             Email: values.email,
+            _id: result.result._id,
           };
           //set user state
           setuser(userObj);

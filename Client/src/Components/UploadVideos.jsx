@@ -18,25 +18,34 @@ const UploadVideos = () => {
   //getting fontcolor
   const { fcolor, btncolor, toastcolor } = useContext(MainContext);
 
-  const props = {
-    beforeUpload: (file) => {
-      const ismp4 = file.type === "video/mp4";
-      const size = file.size <= 1000000000;
-      if (!ismp4 && !size) {
-        message.error(`Video must be .mp4 type and less that 1GB`);
-      }
-      return (ismp4 && size) || Upload.LIST_IGNORE;
-    },
-    onChange: (info) => {
-      return info;
-    },
-    multiple: false,
-    maxCount: 1,
+  const beforeUpload = (file) => {
+    const ismp4 = file.type === "video/mp4";
+    const size = file.size <= 1000000000;
+    if (!ismp4 && !size) {
+      message.error(`Video must be .mp4 type and less that 1GB`);
+    }
+    return (ismp4 && size) || Upload.LIST_IGNORE;
   };
-
+  const getFile = (info) => {
+    return info.fileList;
+  };
   const onFinish = (values) => {
-    //send a toast message
-    toast.success("yeah");
+    //Validation
+    const { title, video } = values;
+    const title_v =
+      title.length > 8 && title.match("^[a-zA-Z0-9()-]+$") && title.length < 50
+        ? true
+        : false;
+    const video_v = video.length > 0 ? true : false;
+
+    if (title_v && video_v) {
+      toast.success("yeah");
+    } else {
+      toast.error(
+        "Title must be > 8 <50 and can contain only Alphabets numbers and () - ,Video Must be uploaded",
+        { autoClose: 10000 }
+      );
+    }
     console.log(values);
   };
   const onFinishFailed = (errorInfo) => {
@@ -84,22 +93,22 @@ const UploadVideos = () => {
             <Form.Item
               label={<span style={{ color: fcolor }}>Title</span>}
               name="title"
-              rules={[
-                {
-                  required: true,
-                  message: "Please Enter the Title",
-                },
-              ]}
             >
               <Input style={{ color: "#177ddc" }} />
             </Form.Item>
             <Form.Item
-              label="Upload"
-              valuePropName="props"
-              getValueFromEvent={props.onChange}
+              label={<span style={{ color: fcolor }}>Upload</span>}
+              name="video"
+              valuePropName="fileList"
+              getValueFromEvent={getFile}
             >
-              <Upload {...props}>
-                <Button icon={<UploadOutlined />}>Upload Video</Button>
+              <Upload beforeUpload={beforeUpload} maxCount={1} multiple={false}>
+                <Button
+                  icon={<UploadOutlined />}
+                  style={{ color: fcolor, backgroundColor: btncolor }}
+                >
+                  Upload Video
+                </Button>
               </Upload>
             </Form.Item>
             <Form.Item

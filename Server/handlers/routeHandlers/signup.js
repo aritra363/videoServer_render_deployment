@@ -31,8 +31,8 @@ router.post(
       const userObj = req.body;
       userObj.password = await bcrypt.hash(req.body.password, 10);
       const userModdelInstance = new userModel(userObj);
-      await userModdelInstance.save();
-      res.status(200).send({ message: "Registration Successful" });
+      const result = await userModdelInstance.save();
+      res.status(200).send({ message: "Registration Successful", result });
     } catch (err) {
       console.log(err.message);
       res.status(500).send({ errors: { common: err.message } });
