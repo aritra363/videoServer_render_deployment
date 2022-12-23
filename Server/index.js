@@ -11,6 +11,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv").config();
+const path = require("path");
 
 //helpers file dependencies
 const environments = require("./helpers/environments");
@@ -19,6 +20,7 @@ const dbConnection = require("./helpers/dbConnection");
 //routes dependencies
 const signup = require("./handlers/routeHandlers/signup");
 const signin = require("./handlers/routeHandlers/signin");
+const upload = require("./handlers/routeHandlers/upload");
 
 //create app object
 const app = express();
@@ -31,6 +33,9 @@ app.use(morgan("dev"));
 
 //Instructing app to use cors policy
 app.use(cors());
+
+//making static path for video upload
+app.use(express.static(path.join(__dirname, "public")));
 
 //Instructing app to use bodyparser to parse x-www-form-urlencoded
 app.use(
@@ -48,6 +53,7 @@ dbConnection;
 //sending request to specific route
 app.use("/signup", signup);
 app.use("/signin", signin);
+app.use("/upload", upload);
 
 //custom 404 Error Handler
 app.use((req, res, next) => {

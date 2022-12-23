@@ -18,11 +18,7 @@ const uploader = (
 ) => {
   //file upload
   //make upload folder path
-  const UPLOAD_FOLDER = path.join(
-    __dirname,
-    "../public/uploads",
-    upload_subfolder
-  );
+  const UPLOAD_FOLDER = path.join(__dirname, "../public/", upload_subfolder);
   //make diskstorage
   const storage = multer.diskStorage({
     //set the destination path
@@ -43,10 +39,10 @@ const uploader = (
   const upload = multer({
     storage: storage,
     limits: {
-      fieldSize: max_file_size,
+      fileSize: Number(max_file_size),
     },
-    filefilter: (req, file, cb) => {
-      if (allowed_file_types.includes(file.mimetype)) {
+    fileFilter: (req, file, cb) => {
+      if (file.mimetype === allowed_file_types) {
         cb(null, true);
       } else {
         cb(createError(error_msg));

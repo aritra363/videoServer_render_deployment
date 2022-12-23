@@ -7,6 +7,7 @@
 //dependencies
 import { useContext, useState } from "react";
 import MainContext from "../Context/Main";
+import { useNavigate } from "react-router";
 import { UploadOutlined } from "@ant-design/icons";
 import { Button, message, Upload, Row, Divider, Col, Form, Input } from "antd";
 import { ToastContainer, toast } from "react-toastify";
@@ -14,9 +15,11 @@ import "react-toastify/dist/ReactToastify.css";
 
 //main function
 const UploadVideos = () => {
+  const navigate = useNavigate();
   const [upload] = Form.useForm();
   //getting fontcolor
-  const { fcolor, btncolor, toastcolor } = useContext(MainContext);
+  const { fcolor, btncolor, toastcolor, user, setCurrent, setisloggedin } =
+    useContext(MainContext);
 
   const beforeUpload = (file) => {
     const ismp4 = file.type === "video/mp4";
@@ -29,24 +32,51 @@ const UploadVideos = () => {
   const getFile = (info) => {
     return info.fileList;
   };
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     //Validation
     const { title, video } = values;
     const title_v =
-      title.length > 8 && title.match("^[a-zA-Z0-9()-]+$") && title.length < 50
+      title.trim().length > 8 &&
+      title.trim().match("^[a-zA-Z0-9()\\s-]+$") &&
+      title.trim().length < 50
         ? true
         : false;
     const video_v = video.length > 0 ? true : false;
-
     if (title_v && video_v) {
-      toast.success("yeah");
+      //send request
+      const formData = new FormData();
+      formData.append("video", video[0].originFileObj);
+      formData.append("title", title);
+      formData.append("_id", user._id);
+      try {
+        const response = await fetch("http://127.0.0.1:4000/upload", {
+          body: formData,
+          method: "POST",
+        });
+        const result = await response.json();
+        //check if authorized or not
+        if (response.status === 200) {
+          //clear form fields
+          upload.resetFields();
+          //give Success reply
+          toast.success(result.message);
+          //loginFunction
+          setCurrent("Home");
+          navigate("/");
+        } else {
+          //send an error toast message
+          toast.error("Sorry Video is not Uploaded, Internal Server Error 500");
+        }
+      } catch (err) {
+        //send an error toast message
+        toast.error(err.message);
+      }
     } else {
       toast.error(
         "Title must be > 8 <50 and can contain only Alphabets numbers and () - ,Video Must be uploaded",
         { autoClose: 10000 }
       );
     }
-    console.log(values);
   };
   const onFinishFailed = (errorInfo) => {
     //send a toast message
