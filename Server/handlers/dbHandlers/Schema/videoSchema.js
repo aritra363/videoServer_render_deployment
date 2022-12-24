@@ -19,6 +19,10 @@ const videoSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    thumb: {
+      type: String,
+      required: true,
+    },
     userid: {
       type: mongoose.Types.ObjectId,
       ref: "User",
