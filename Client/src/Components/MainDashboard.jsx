@@ -18,6 +18,7 @@ const MainDashboard = () => {
   //local state for loading spinner
   const [spinner, setspinner] = useState(true);
   const [videoArray, setvideoArray] = useState(undefined);
+  
   useEffect(() => {
     setspinner(true);
     setvideoArray(undefined);
@@ -29,18 +30,21 @@ const MainDashboard = () => {
           });
           const result = await response.json();
           if (response.status === 200) {
-            //map through the result 
-            const vidArr = result.result.map(item => {
-              return <VideoModal 
-                      thumb={item.thumb}
-                      title={item.title}
-                      key={item._id}
-                      video={item.video}
-                      uploadDate={item.createdAt}
-                      uploadBy={item.userid.firstName}
-                      />
-            })
-            setvideoArray(vidArr)
+            //map through the result
+            const vidArr = result.result.map((item) => {
+              return (
+                <VideoModal
+                  thumb={item.thumb}
+                  title={item.title}
+                  key={item._id}
+                  video={item.video}
+                  uploadDate={item.createdAt}
+                  uploadBy={item.userid.firstName}
+                  
+                />
+              );
+            });
+            setvideoArray(vidArr);
           } else {
             setvideoArray(<p>Some error Occured!</p>);
           }

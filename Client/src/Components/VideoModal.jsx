@@ -1,30 +1,63 @@
+/* 
+  Title : Video Modal 
+  Description : Generate Video Component based on the props passed
+  Author : Aritra Pal
+  Date : 24/12/2022 
+*/
+//dependencies
 import { useContext } from "react";
 import MainContext from "../Context/Main";
+import "../ComponentStyle/VideoModal.css";
+import uuid from "react-uuid";
+import { useNavigate } from "react-router";
 
+//main function
 function VideoModal({ uploadBy, title, thumb, uploadDate }) {
+  const navigate = useNavigate();
   //state for bgcolor and fontcolor
-  const { fcolor, cardcolor } = useContext(MainContext);
+  const { fcolor, cardcolor, setCurrent } = useContext(MainContext);
   let formattedDate = "";
   if (uploadDate !== "") {
     const prev_date = new Date(uploadDate);
     const today_date = new Date();
-    const diff_hour = Math.ceil(Math.abs(today_date - prev_date) / 36e5);
-    if (diff_hour <= 24) {
+    const diff_day = Math.floor(
+      Math.round(today_date - prev_date) / (1000 * 60 * 60 * 24)
+    );
+    if (diff_day === 0) {
       formattedDate = "Today";
-    } else if (diff_hour > 24 && diff_hour <= 48) {
+    } else if (diff_day >= 0 && diff_day <= 1) {
       formattedDate = "Yesterday";
-    } else if (diff_hour > 48) {
-      //count days
-      const days = Math.ceil(diff_hour / 24);
-      formattedDate = `${days} days ago`;
+    } else if (diff_day > 1 && diff_day <= 29) {
+      formattedDate = `${diff_day} days ago`;
+    } else if (diff_day > 29 && diff_day <= 365) {
+      //count months
+      const diff_month =
+        (today_date.getFullYear() - prev_date.getFullYear()) * 12 +
+        (today_date.getMonth() - prev_date.getMonth());
+      formattedDate = `${diff_month} Month ago`;
+    } else if (diff_day >= 366 && diff_day > 365) {
+      //count years
+      const years = Math.floor(diff_day / 366);
+      formattedDate = `${years} year ago`;
     } else {
       formattedDate = "unknown";
     }
   } else {
     formattedDate = "unknown";
   }
+  //videopagehandler function
+  const videopageHandler = (getTitle) => {
+    const videoLink = getTitle.split(" ").join("-") + "-" + uuid();
+    navigate(`/${videoLink}`);
+    setCurrent("videoPage");
+  };
+  //return jsx
   return (
-    <div className="col-md-3" style={{ marginTop: "30px" }}>
+    <div
+      className="col-md-3"
+      style={{ marginTop: "30px" }}
+      onClick={() => videopageHandler(title)}
+    >
       <div className="card" style={{ width: "18rem", border: "none" }}>
         <img
           src={`http://127.0.0.1:4000/thumb/${thumb}`}
@@ -46,6 +79,7 @@ function VideoModal({ uploadBy, title, thumb, uploadDate }) {
   );
 }
 
+//default props value
 VideoModal.defaultProps = {
   uploadBy: "unknown",
   title: "Demo",
@@ -53,4 +87,5 @@ VideoModal.defaultProps = {
   uploadDate: "",
 };
 
+//exporting the component
 export default VideoModal;
