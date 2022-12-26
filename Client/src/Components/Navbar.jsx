@@ -38,6 +38,8 @@ const Navbar = () => {
     user,
     setuser,
     toastcolor,
+    cardcolor,
+    setcardcolor,
   } = useContext(MainContext);
 
   //Array of Options
@@ -139,12 +141,16 @@ const Navbar = () => {
     settoastcolor((prevcolor) => {
       return prevcolor === "light" ? "dark" : "light";
     });
+    //set Card color
+    setcardcolor((prevcolor) => {
+      return prevcolor === "#FFFFFF" ? "#001529" : "#FFFFFF";
+    });
   };
   //setting on mount/reload navigate to home
   useEffect(() => {
     if (localStorage.getItem("token") === "aritrapalisagoodboy") {
       setisloggedin(true);
-      setCurrent("Home");
+      setCurrent("home");
     }
     navigate("/");
   }, []);

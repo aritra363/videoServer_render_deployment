@@ -27,6 +27,8 @@ export const MainProvider = ({ children }) => {
   const [btncolor, setbtncolor] = useState("#FFFFFF");
   //state for toastcolor
   const [toastcolor, settoastcolor] = useState("light");
+  //state for card background
+  const [cardcolor, setcardcolor] = useState("#FFFFFF");
   //state for user details
   const [user, setuser] = useState({});
   //return
@@ -49,6 +51,8 @@ export const MainProvider = ({ children }) => {
         settoastcolor,
         user,
         setuser,
+        cardcolor,
+        setcardcolor,
       }}
     >
       {children}

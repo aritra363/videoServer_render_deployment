@@ -49,10 +49,15 @@ const UploadVideos = () => {
       formData.append("title", title);
       formData.append("_id", user._id);
       try {
-        const response = await fetch("http://127.0.0.1:4000/upload", {
-          body: formData,
-          method: "POST",
-        });
+        const response = await toast.promise(
+          fetch("http://127.0.0.1:4000/upload", {
+            body: formData,
+            method: "POST",
+          }),
+          {
+            pending: "Uploading Wait!",
+          }
+        );
         const result = await response.json();
         //check if authorized or not
         if (response.status === 200) {
@@ -61,7 +66,7 @@ const UploadVideos = () => {
           //give Success reply
           toast.success(result.message);
           //loginFunction
-          setCurrent("Home");
+          setCurrent("home");
           navigate("/");
         } else {
           //send an error toast message

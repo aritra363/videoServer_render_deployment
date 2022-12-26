@@ -24,14 +24,19 @@ const Signin = () => {
     //send request to server
     const userData = JSON.stringify(values);
     try {
-      const response = await fetch("http://127.0.0.1:4000/signin", {
-        body: userData,
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      });
+      const response = await toast.promise(
+        fetch("http://127.0.0.1:4000/signin", {
+          body: userData,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        }),
+        {
+          pending: "Logging In Wait",
+        }
+      );
       const result = await response.json();
       //check if authorized or not
       if (response.status === 200) {
@@ -49,7 +54,7 @@ const Signin = () => {
         //set user state
         setuser(userObj);
         //loginFunction
-        setCurrent("Home");
+        setCurrent("home");
         setisloggedin("true");
         //localStorage.setItem("token", "aritrapalisagoodboy");
         navigate("/");
@@ -59,6 +64,7 @@ const Signin = () => {
       }
     } catch (err) {
       //send an error toast message
+
       toast.error(err.message);
     }
   };
