@@ -11,23 +11,27 @@ import MainContext from "../Context/Main";
 
 //component dependencies
 import VideoModal from "./VideoModal";
+import "../ComponentStyle/Spinner.css";
 
 //main function
 const MainDashboard = () => {
-  const { fcolor, current } = useContext(MainContext);
+  const { fcolor, current, bgcolor, spinnercolor } = useContext(MainContext);
   //local state for loading spinner
   const [spinner, setspinner] = useState(true);
   const [videoArray, setvideoArray] = useState(undefined);
-  
+
   useEffect(() => {
     setspinner(true);
     setvideoArray(undefined);
     if (current === "home") {
       const getVideo = async () => {
         try {
-          const response = await fetch("http://127.0.0.1:4000/upload", {
-            method: "GET",
-          });
+          const response = await fetch(
+            `${process.env.REACT_APP_BACKEND_URL}upload`,
+            {
+              method: "GET",
+            }
+          );
           const result = await response.json();
           if (response.status === 200) {
             //map through the result
@@ -40,7 +44,6 @@ const MainDashboard = () => {
                   video={item.video}
                   uploadDate={item.createdAt}
                   uploadBy={item.userid.firstName}
-                  
                 />
               );
             });
@@ -60,9 +63,18 @@ const MainDashboard = () => {
   //return jsx
   return (
     <>
-      <div style={{ color: fcolor }}>MainDashboard</div>;
       <div className="container-fluid">
-        <div className="row">{spinner ? <p>Loading! Wait</p> : videoArray}</div>
+        <div className="row">
+          {spinner ? (
+            <div className="lds-facebook">
+              <div style={{ background: spinnercolor }}></div>
+              <div style={{ backgroundColor: spinnercolor }}></div>
+              <div style={{ backgroundColor: spinnercolor }}></div>
+            </div>
+          ) : (
+            videoArray
+          )}
+        </div>
       </div>
     </>
   );

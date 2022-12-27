@@ -42,6 +42,7 @@ const Navbar = () => {
     setcardcolor,
     setvideoPoster,
     setvideoSrc,
+    setspinnercolor,
   } = useContext(MainContext);
 
   //Array of Options
@@ -132,6 +133,10 @@ const Navbar = () => {
     //set bgcolor
     setbgcolor((prevcolor) => {
       return prevcolor === "#ebebeb" ? "#052f56" : "#ebebeb";
+    });
+    //set spinner color
+    setspinnercolor((prevcolor) => {
+      return prevcolor === "#052F56" ? "#FFF" : "#052F56";
     });
     //set fontcolor
     setfcolor((prevcolor) => {

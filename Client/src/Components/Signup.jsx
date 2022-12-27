@@ -63,7 +63,7 @@ const Signup = () => {
       const userData = JSON.stringify(values);
       try {
         const response = await toast.promise(
-          fetch("http://127.0.0.1:4000/signup", {
+          fetch(`${process.env.REACT_APP_BACKEND_URL}signup`, {
             body: userData,
             method: "POST",
             headers: {

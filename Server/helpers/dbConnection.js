@@ -8,14 +8,12 @@
 //dependencies
 const mongoose = require("mongoose");
 
-//helpers file dependencies
-const environments = require("./environments");
 
 mongoose.set("strictQuery", false);
 
 //db connection
 const dbConnection = mongoose.connect(
-  environments.dbURL,
+  process.env.DB_URL,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,

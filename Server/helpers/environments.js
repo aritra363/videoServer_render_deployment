@@ -13,14 +13,12 @@ const environments = {};
 environments.staging = {
   port: 4000,
   envname: "staging",
-  dbURL: "mongodb://127.0.0.1/videoServer",
 };
 
 //For Production
 environments.production = {
   port: 5000,
   envname: "production",
-  dbURL: "mongodb://127.0.0.1/videoServer",
 };
 
 //getting the current environment

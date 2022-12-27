@@ -33,6 +33,8 @@ export const MainProvider = ({ children }) => {
   const [videoPoster, setvideoPoster] = useState("");
   //state for videoplayer videolink
   const [videoSrc, setvideoSrc] = useState("");
+  //state for Spinner Color
+  const [spinnercolor, setspinnercolor] = useState("#052F56");
   //state for user details
   const [user, setuser] = useState({});
   //return
@@ -61,6 +63,8 @@ export const MainProvider = ({ children }) => {
         setvideoPoster,
         videoSrc,
         setvideoSrc,
+        spinnercolor,
+        setspinnercolor,
       }}
     >
       {children}

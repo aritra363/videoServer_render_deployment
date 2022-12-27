@@ -7,6 +7,9 @@
 //dependencies
 import { useContext } from "react";
 import MainContext from "../Context/Main";
+import { DefaultPlayer as Video } from "react-html5video";
+import "react-html5video/dist/styles.css";
+import "../ComponentStyle/VideoPage.css";
 
 //main function
 function VideoPage() {
@@ -16,8 +19,23 @@ function VideoPage() {
   //return jsx
   return (
     <div className="container">
-      <p>{`http://127.0.0.1:4000/videos/${videoSrc}`}</p>
-      <p>{`http://127.0.0.1:4000/thumb/${videoPoster}`}</p>
+      <br />
+      <br />
+      <div className="videoContainer">
+        <Video
+          loop
+          controls={["PlayPause", "Seek", "Time", "Volume", "Fullscreen"]}
+          poster={`http://127.0.0.1:4000/thumb/${videoPoster}`}
+          onCanPlayThrough={() => {
+            // Do stuff
+          }}
+        >
+          <source
+            src={`http://127.0.0.1:4000/videos/${videoSrc}`}
+            type="video/mp4"
+          />
+        </Video>
+      </div>
     </div>
   );
 }
