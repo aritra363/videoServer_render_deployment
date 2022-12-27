@@ -12,10 +12,11 @@ import uuid from "react-uuid";
 import { useNavigate } from "react-router";
 
 //main function
-function VideoModal({ uploadBy, title, thumb, uploadDate }) {
+function VideoModal({ uploadBy, title, thumb, uploadDate, video }) {
   const navigate = useNavigate();
   //state for bgcolor and fontcolor
-  const { fcolor, cardcolor, setCurrent } = useContext(MainContext);
+  const { fcolor, cardcolor, setCurrent, setvideoPoster, setvideoSrc } =
+    useContext(MainContext);
   let formattedDate = "";
   if (uploadDate !== "") {
     const prev_date = new Date(uploadDate);
@@ -46,17 +47,19 @@ function VideoModal({ uploadBy, title, thumb, uploadDate }) {
     formattedDate = "unknown";
   }
   //videopagehandler function
-  const videopageHandler = (getTitle) => {
+  const videopageHandler = (getTitle, video, thumb) => {
     const videoLink = getTitle.split(" ").join("-") + "-" + uuid();
     navigate(`/${videoLink}`);
-    setCurrent("videoPage");
+    //setCurrent("videoPage");
+    setvideoPoster(thumb);
+    setvideoSrc(video);
   };
   //return jsx
   return (
     <div
       className="col-md-3"
       style={{ marginTop: "30px" }}
-      onClick={() => videopageHandler(title)}
+      onClick={() => videopageHandler(title, video, thumb)}
     >
       <div className="card" style={{ width: "18rem", border: "none" }}>
         <img

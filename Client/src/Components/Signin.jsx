@@ -16,7 +16,8 @@ import "react-toastify/dist/ReactToastify.css";
 const Signin = () => {
   const [login] = Form.useForm();
   //getting fontcolor
-  const { fcolor, btncolor, toastcolor, setuser } = useContext(MainContext);
+  const { fcolor, btncolor, toastcolor, setuser, setvideoPoster, setvideoSrc } =
+    useContext(MainContext);
   const navigate = useNavigate();
   const { setCurrent, setisloggedin } = useContext(MainContext);
 

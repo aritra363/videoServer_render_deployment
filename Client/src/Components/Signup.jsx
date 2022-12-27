@@ -18,8 +18,10 @@ const Signup = () => {
   const navigate = useNavigate();
   const [signup] = Form.useForm();
   //getting fontcolor
-  const { fcolor, btncolor, toastcolor, setCurrent, setuser, setisloggedin } =
+  const { fcolor, btncolor, toastcolor, setCurrent, setuser, setisloggedin,setvideoPoster,setvideoSrc } =
     useContext(MainContext);
+    /* setvideoPoster("");
+    setvideoSrc(""); */
   //local state
   //state for password field
   const [password, setpassword] = useState("");

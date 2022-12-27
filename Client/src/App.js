@@ -18,6 +18,7 @@ import VideoPage from "./Components/VideoPage";
 
 //App function
 function App() {
+
   return (
     <Router>
       <MainProvider>

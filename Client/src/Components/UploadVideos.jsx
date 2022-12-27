@@ -18,9 +18,18 @@ const UploadVideos = () => {
   const navigate = useNavigate();
   const [upload] = Form.useForm();
   //getting fontcolor
-  const { fcolor, btncolor, toastcolor, user, setCurrent, setisloggedin } =
-    useContext(MainContext);
-
+  const {
+    fcolor,
+    btncolor,
+    toastcolor,
+    user,
+    setCurrent,
+    setisloggedin,
+    setvideoPoster,
+    setvideoSrc,
+  } = useContext(MainContext);
+  /* setvideoPoster("");
+  setvideoSrc(""); */
   const beforeUpload = (file) => {
     const ismp4 = file.type === "video/mp4";
     const size = file.size <= 1000000000;

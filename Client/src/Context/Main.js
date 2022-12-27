@@ -29,6 +29,10 @@ export const MainProvider = ({ children }) => {
   const [toastcolor, settoastcolor] = useState("light");
   //state for card background
   const [cardcolor, setcardcolor] = useState("#FFFFFF");
+  //state for videoplayer poster
+  const [videoPoster, setvideoPoster] = useState("");
+  //state for videoplayer videolink
+  const [videoSrc, setvideoSrc] = useState("");
   //state for user details
   const [user, setuser] = useState({});
   //return
@@ -53,6 +57,10 @@ export const MainProvider = ({ children }) => {
         setuser,
         cardcolor,
         setcardcolor,
+        videoPoster,
+        setvideoPoster,
+        videoSrc,
+        setvideoSrc,
       }}
     >
       {children}

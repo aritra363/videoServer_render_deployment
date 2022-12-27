@@ -40,6 +40,8 @@ const Navbar = () => {
     toastcolor,
     cardcolor,
     setcardcolor,
+    setvideoPoster,
+    setvideoSrc,
   } = useContext(MainContext);
 
   //Array of Options
@@ -116,6 +118,8 @@ const Navbar = () => {
       setisloggedin(false);
       //localStorage.removeItem("token");
       setuser({});
+      setvideoPoster("");
+      setvideoSrc("");
       toast.success("LoggedOut Succesfully!");
     }
   };
@@ -151,6 +155,8 @@ const Navbar = () => {
     if (localStorage.getItem("token") === "aritrapalisagoodboy") {
       setisloggedin(true);
       setCurrent("home");
+      setvideoPoster("");
+      setvideoSrc("");
     }
     navigate("/");
   }, []);
