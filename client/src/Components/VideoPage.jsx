@@ -24,13 +24,13 @@ function VideoPage() {
         <Video
           loop
           controls={["PlayPause", "Seek", "Time", "Volume", "Fullscreen"]}
-          poster={`https://aritravideoserver.onrender.com/thumb/${videoPoster}`}
+          poster={`/thumb/${videoPoster}`}
           onCanPlayThrough={() => {
             // Do stuff
           }}
         >
           <source
-            src={`https://aritravideoserver.onrender.com/videos/${videoSrc}`}
+            src={`/videos/${videoSrc}`}
             type="video/mp4"
           />
         </Video>

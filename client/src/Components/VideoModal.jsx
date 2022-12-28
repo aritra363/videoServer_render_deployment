@@ -62,11 +62,7 @@ function VideoModal({ uploadBy, title, thumb, uploadDate, video }) {
       onClick={() => videopageHandler(title, video, thumb)}
     >
       <div className="card" style={{ width: "18rem", border: "none" }}>
-        <img
-          src={`http://127.0.0.1:4000/thumb/${thumb}`}
-          className="card-img-top"
-          alt="..."
-        />
+        <img src={`/thumb/${thumb}`} className="card-img-top" alt="..." />
         <div
           className="card-body"
           style={{ color: fcolor, backgroundColor: cardcolor }}
