@@ -26,7 +26,7 @@ const Signin = () => {
     const userData = JSON.stringify(values);
     try {
       const response = await toast.promise(
-        fetch(`${process.env.REACT_APP_BACKEND_URL}signin`, {
+        fetch(`/signin`, {
           body: userData,
           method: "POST",
           headers: {

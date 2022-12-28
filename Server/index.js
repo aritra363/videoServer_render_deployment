@@ -14,7 +14,6 @@ const dotenv = require("dotenv").config();
 const path = require("path");
 
 //helpers file dependencies
-const environments = require("./helpers/environments");
 const dbConnection = require("./helpers/dbConnection");
 
 //routes dependencies
@@ -22,6 +21,8 @@ const signup = require("./handlers/routeHandlers/signup");
 const signin = require("./handlers/routeHandlers/signin");
 const upload = require("./handlers/routeHandlers/upload");
 
+//assign port
+const PORT = process.env.PORT || 4000;
 //create app object
 const app = express();
 
@@ -55,12 +56,19 @@ app.use("/signup", signup);
 app.use("/signin", signin);
 app.use("/upload", upload);
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "client/build")));
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+  );
+}
+
 //custom 404 Error Handler
 app.use((req, res, next) => {
   res.render("index");
 });
 
 //running the server on staging port
-app.listen(environments.port, () => {
-  console.log(`Listening on port ${environments.port}`);
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
 });

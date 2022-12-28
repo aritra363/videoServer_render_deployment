@@ -15,7 +15,6 @@ import "../ComponentStyle/VideoPage.css";
 function VideoPage() {
   const { fcolor, cardcolor, setCurrent, videoPoster, videoSrc } =
     useContext(MainContext);
-  console.log(videoPoster, videoSrc);
   //return jsx
   return (
     <div className="container">

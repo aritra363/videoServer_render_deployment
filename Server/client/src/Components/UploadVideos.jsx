@@ -59,7 +59,7 @@ const UploadVideos = () => {
       formData.append("_id", user._id);
       try {
         const response = await toast.promise(
-          fetch(`${process.env.REACT_APP_BACKEND_URL}upload`, {
+          fetch(`/upload`, {
             body: formData,
             method: "POST",
           }),

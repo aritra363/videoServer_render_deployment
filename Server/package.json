@@ -4,9 +4,12 @@
   "description": "Video upload Server",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "SET NODE_ENV=staging&&nodemon index",
-    "production": "SET NODE_ENV=production&&nodemon index"
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "clientinstall": "npm install --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "render-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build -- prefix client"
   },
   "author": "Aritra",
   "license": "ISC",

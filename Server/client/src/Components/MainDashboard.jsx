@@ -26,28 +26,29 @@ const MainDashboard = () => {
     if (current === "home") {
       const getVideo = async () => {
         try {
-          const response = await fetch(
-            `${process.env.REACT_APP_BACKEND_URL}upload`,
-            {
-              method: "GET",
-            }
-          );
+          const response = await fetch(`/upload`, {
+            method: "GET",
+          });
           const result = await response.json();
           if (response.status === 200) {
             //map through the result
-            const vidArr = result.result.map((item) => {
-              return (
-                <VideoModal
-                  thumb={item.thumb}
-                  title={item.title}
-                  key={item._id}
-                  video={item.video}
-                  uploadDate={item.createdAt}
-                  uploadBy={item.userid.firstName}
-                />
-              );
-            });
-            setvideoArray(vidArr);
+            if (result.result.length > 0) {
+              const vidArr = result.result.map((item) => {
+                return (
+                  <VideoModal
+                    thumb={item.thumb}
+                    title={item.title}
+                    key={item._id}
+                    video={item.video}
+                    uploadDate={item.createdAt}
+                    uploadBy={item.userid.firstName}
+                  />
+                );
+              });
+              setvideoArray(vidArr);
+            } else {
+              setvideoArray(<p>No Videos To Show</p>);
+            }
           } else {
             setvideoArray(<p>Some error Occured!</p>);
           }

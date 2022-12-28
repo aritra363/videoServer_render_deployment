@@ -18,9 +18,17 @@ const Signup = () => {
   const navigate = useNavigate();
   const [signup] = Form.useForm();
   //getting fontcolor
-  const { fcolor, btncolor, toastcolor, setCurrent, setuser, setisloggedin,setvideoPoster,setvideoSrc } =
-    useContext(MainContext);
-    /* setvideoPoster("");
+  const {
+    fcolor,
+    btncolor,
+    toastcolor,
+    setCurrent,
+    setuser,
+    setisloggedin,
+    setvideoPoster,
+    setvideoSrc,
+  } = useContext(MainContext);
+  /* setvideoPoster("");
     setvideoSrc(""); */
   //local state
   //state for password field
@@ -63,7 +71,7 @@ const Signup = () => {
       const userData = JSON.stringify(values);
       try {
         const response = await toast.promise(
-          fetch(`${process.env.REACT_APP_BACKEND_URL}signup`, {
+          fetch(`/signup`, {
             body: userData,
             method: "POST",
             headers: {
