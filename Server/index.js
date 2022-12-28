@@ -56,12 +56,10 @@ app.use("/signup", signup);
 app.use("/signin", signin);
 app.use("/upload", upload);
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "client/build")));
-  app.get("*", (req, res) =>
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
-  );
-}
+app.use(express.static(path.join(__dirname, "client/build")));
+app.get("*", (req, res) =>
+  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+);
 
 //custom 404 Error Handler
 app.use((req, res, next) => {
