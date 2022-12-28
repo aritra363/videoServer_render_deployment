@@ -1,7 +1,6 @@
 # Excluding node_modules and Videos Folder
 node_modules/
-public/videos/
-public/thumb/
+
 
 # Excluding .env file
 .env
