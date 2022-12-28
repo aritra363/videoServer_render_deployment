@@ -1,7 +1,0 @@
-# Excluding node_modules and Videos Folder
-node_modules/
-Server/public/videos/
-Server/public/thumb/
-
-# Excluding .env file
-.env
